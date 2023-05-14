@@ -37,10 +37,10 @@ RELTOL = 1e-5;
 QUIET = 0;
 options = optimoptions('quadprog',...
     'Algorithm','interior-point-convex','MaxIterations',500,'OptimalityTolerance',1e-8,'ConstraintTolerance',1e-8,'Display','off');
-for step = 1 : ADMM_Max_Iter  %´ËÊ±µü´ú×î´óÖµÎª1000
+for step = 1 : ADMM_Max_Iter  %æ­¤æ—¶è¿­ä»£æœ€å¤§å€¼ä¸º1000
 
-            % ÎåÁ¾³µ£¬Æ½ĞĞÔËËã f(w_k+1) = argmin (f(w_k)+lambda(y_k-z_k)+rho/2*norm(y_k-z_k)^2 ) ÆäÖĞ ¾«¼òÎª
-            % f(w_k+1) = f(w_k)+ c*w_k + d     quadprog()¶ş´Î¹æ»®Ëã·¨
+            % äº”è¾†è½¦ï¼Œå¹³è¡Œè¿ç®— f(w_k+1) = argmin (f(w_k)+lambda(y_k-z_k)+rho/2*norm(y_k-z_k)^2 ) å…¶ä¸­ ç²¾ç®€ä¸º
+            % f(w_k+1) = f(w_k)+ c*w_k + d     quadprog()äºŒæ¬¡è§„åˆ’ç®—æ³•
             % ========================================================
             f1 = p1+(Lambda1'*k1-rho*g1'*k1)';
             f2 = p2+(Lambda2'*k2-rho*g2'*k2)';
@@ -53,11 +53,11 @@ for step = 1 : ADMM_Max_Iter  %´ËÊ±µü´ú×î´óÖµÎª1000
             [w3,fval3,exitflag3,output3] = quadprog(2.*Q3,f3,A2_3,O3,A1_3,E3,w_min3,w_max3,[],options);
             [w4,fval4,exitflag4,output4] = quadprog(2.*Q4,f4,A2_4,O4,A1_4,E4,w_min4,w_max4,[],options);
             [w5,fval5,exitflag5,output5] = quadprog(2.*Q5,f5,A2_5,O5,A1_5,E5,w_min5,w_max5,[],options);
-            % ¸üĞÂ¶ÔÅ¼±äÁ¿===============================================
+            % æ›´æ–°å¯¹å¶å˜é‡===============================================
             
-                 c1 = k1*w1; c2 = k2*w2; c3 = k3*w3; c4 = k4*w4; c5 = k5*w5;  % ´ú±íyÏòÁ¿Öµ
+                 c1 = k1*w1; c2 = k2*w2; c3 = k3*w3; c4 = k4*w4; c5 = k5*w5;  % ä»£è¡¨yå‘é‡å€¼
                if step > 1
-                 Lambda1 = Lambda1 + rho * ( c1 - g1 );  % F2*z ±íÊ¾´Óz±äÁ¿ÖĞÌáÈ¡ÏàÓ¦µÄÔÚwÖĞµÄÏàÓ¦yÏòÁ¿Öµ
+                 Lambda1 = Lambda1 + rho * ( c1 - g1 );  % F2*z è¡¨ç¤ºä»zå˜é‡ä¸­æå–ç›¸åº”çš„åœ¨wä¸­çš„ç›¸åº”yå‘é‡å€¼
                  Lambda2 = Lambda2 + rho * ( c2 - g2 );
                  Lambda3 = Lambda3 + rho * ( c3 - g3 );
                  Lambda4 = Lambda4 + rho * ( c4 - g4 );
@@ -65,7 +65,7 @@ for step = 1 : ADMM_Max_Iter  %´ËÊ±µü´ú×î´óÖµÎª1000
               end
             % G(z) 
             % =======================================================
-%             c1 = k1*w1; c2 = k2*w2; c3 = k3*w3; c4 = k4*w4; c5 = k5*w5;  % ´ú±íyÏòÁ¿Öµ
+%             c1 = k1*w1; c2 = k2*w2; c3 = k3*w3; c4 = k4*w4; c5 = k5*w5;  % ä»£è¡¨yå‘é‡å€¼
             tmp1 = z1; tmp2 = z2; tmp3 = z3; tmp4 = z4; tmp5 = z5;
             z1 = 0.5*(c1+v1*c2);
             z2 = 0.5*(v2*c2+v1*c3);
@@ -73,8 +73,8 @@ for step = 1 : ADMM_Max_Iter  %´ËÊ±µü´ú×î´óÖµÎª1000
             z4 = 0.5*(v1*c5+v2*c4);
             z5 = v2*c5;
             z = [z1;z2;z3;z4;z5];
-            % ¸üĞÂ¶ÔÅ¼±äÁ¿===============================================
-            g1 = F1*z;  %´ú±íÈ«¾Ö±äÁ¿ÖĞÏàÓ¦¹ØÓÚyÏòÁ¿µÄ¶ÔÓ¦Öµ
+            % æ›´æ–°å¯¹å¶å˜é‡===============================================
+            g1 = F1*z;  %ä»£è¡¨å…¨å±€å˜é‡ä¸­ç›¸åº”å…³äºyå‘é‡çš„å¯¹åº”å€¼
             g2 = F2*z;
             g3 = F3*z;
             g4 = F4*z;
@@ -82,7 +82,7 @@ for step = 1 : ADMM_Max_Iter  %´ËÊ±µü´ú×î´óÖµÎª1000
             
             l1 = Lambda1; l2 = Lambda2;l3 = Lambda3;l4 = Lambda4;l5 = Lambda5;
             
-                Lambda1 = Lambda1 + rho * ( c1 - g1 );  % F2*z ±íÊ¾´Óz±äÁ¿ÖĞÌáÈ¡ÏàÓ¦µÄÔÚwÖĞµÄÏàÓ¦yÏòÁ¿Öµ
+                Lambda1 = Lambda1 + rho * ( c1 - g1 );  % F2*z è¡¨ç¤ºä»zå˜é‡ä¸­æå–ç›¸åº”çš„åœ¨wä¸­çš„ç›¸åº”yå‘é‡å€¼
                 Lambda2 = Lambda2 + rho * ( c2 - g2 );
                 Lambda3 = Lambda3 + rho * ( c3 - g3 );
                 Lambda4 = Lambda4 + rho * ( c4 - g4 );
@@ -91,7 +91,7 @@ for step = 1 : ADMM_Max_Iter  %´ËÊ±µü´ú×î´óÖµÎª1000
             %===========================================================                          
             
             % stoppin criterion for ADMM
-            % primalÎó²î
+            % primalè¯¯å·®
             history.fval1(step) = fval; %+Lambda1'*(-g1)+cc1'*QQ*cc1+0.25*g1'*g1;%(w1-cc1)'*QQ*(w1-cc1);
             history.fval2(step) = fval2;%+Lambda2'*(-g2)+cc2'*QQ2*cc2+0.25*g2'*g2;   %(w2-cc2)'*QQ2*(w2-cc2);
             history.fval3(step) = fval3;%+Lambda3'*(-g3)+cc3'*QQ3*cc3+0.25*g3'*g3;       %(w3-cc3)'*QQ3*(w3-cc3);
@@ -103,7 +103,7 @@ for step = 1 : ADMM_Max_Iter  %´ËÊ±µü´ú×î´óÖµÎª1000
             history.r_norm3(step)  = norm(Lambda3-l3)/rho;  history.r_norm4(step)  = norm(Lambda4-l4)/rho;
             history.r_norm5(step)  = norm(Lambda5-l5)/rho;
             
-             % dual Îó²î  
+             % dual è¯¯å·®  
              if step == 1
                  history.s_norm1(step) = sqrt(1.25)*norm(z1); history.s_norm2(step) = sqrt(1.25)*norm(z2);
                  history.s_norm3(step) = sqrt(1.25)*norm(z3); history.s_norm4(step) = sqrt(1.25)*norm(z4);
@@ -154,28 +154,28 @@ L2 = [zeros(180,180) L2];
 figure(9);
 plot3(c1,T,L1*w1);
 set(gca, 'YDir','reverse');
-xlabel('diatance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
+xlabel('distance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
 grid on;
 figure(1);
 
 plot3(v2*c2,T,L2*w2);
 set(gca, 'YDir','reverse');
-xlabel('diatance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
+xlabel('distance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
 grid on;
 figure(2);
 
 
 plot3(v2*c3,T,L2*w3);
 set(gca, 'YDir','reverse');
-xlabel('diatance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
+xlabel('distance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
 grid on;
 figure(3);
 
 
 plot3(v2*c4,T,L2*w4);
 set(gca, 'YDir','reverse');
-xlabel('diatance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
-set(get(gca,'XLabel'),'FontSize',16);%Í¼ÉÏÎÄ×ÖÎª8 point»òĞ¡5ºÅ
+xlabel('distance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
+set(get(gca,'XLabel'),'FontSize',16);%å›¾ä¸Šæ–‡å­—ä¸º8 pointæˆ–å°5å·
 set(get(gca,'YLabel'),'FontSize',16);
 set(get(gca,'ZLabel'),'FontSize',16);
 grid on;
@@ -184,14 +184,14 @@ figure(4);
 
 plot3(v2*c5,T,L2*w5);
 set(gca, 'YDir','reverse');
-xlabel('diatance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
+xlabel('distance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
 grid on;
 figure(5);
 
 
 plot3(c1,T,L1*w1,v2*c2,T,L2*w2,v2*c3,T,L2*w3,v2*c4,T,L2*w4,v2*c5,T,L2*w5);
 set(gca, 'YDir','reverse');
-xlabel('diatance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
+xlabel('distance(m)'),ylabel('time(min)'),zlabel('velocity(m/s)');
 legend('train1','train2','train3','train4','train5','Location','northeast');
 grid on;
 figure(6);
@@ -199,7 +199,7 @@ figure(6);
 
 
 plot(T,c1,T,v2*c2,T,v2*c3,T,v2*c4,T,v2*c5);
-xlabel('time'),ylabel('diatance');
+xlabel('time'),ylabel('distance');
 grid on;
 figure(7);
 
