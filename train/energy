@@ -1,0 +1,97 @@
+energy1 = zeros(80,1); energy2 = zeros(80,1);energy3 = zeros(80,1);energy4 = zeros(80,1);energy5 = zeros(80,1);
+maxk = 80;
+FF1 = [eye(180,180),zeros(180,360)];
+FF2 = [eye(180,180),zeros(180,540)];
+ff1 = FF1*w1; ff2 = FF2*w2; ff3 = FF2*w3; ff4 = FF2*w4; ff5 = FF2*w5;
+vv1 = L1*w1; vv2 = L2*w2; vv3 = L2*w3; vv4 = L2*w4; vv5 = L2*w5;
+
+for k = 1 : maxk
+    if k < 2
+        energy1(k) = abs(ff1(k))*abs(vv1(k))/1000;
+        energy2(k) = abs(ff2(k))*abs(vv2(k))/60000;
+        energy3(k) = abs(ff3(k))*abs(vv3(k))/60000;
+        energy4(k) = abs(ff4(k))*abs(vv4(k))/60000;
+        energy5(k) = abs(ff5(k))*abs(vv5(k))/60000;
+    else
+        energy1(k) = energy1(k-1)+abs(ff1(k))*abs(vv1(k))/60000;
+        energy2(k) = energy2(k-1)+abs(ff2(k))*abs(vv2(k))/60000;
+        energy3(k) = energy3(k-1)+abs(ff3(k))*abs(vv3(k))/60000;
+        energy4(k) = energy4(k-1)+abs(ff4(k))*abs(vv4(k))/60000;
+        energy5(k) = energy5(k-1)+abs(ff5(k))*abs(vv5(k))/60000;
+    end
+end
+
+figure;
+TT = 1:80;
+[AX,H1,H2] = plotyy(TT,vv1(1:80),TT,energy1,'plot');
+set(get(AX(1),'Ylabel'),'String','Velocity(m/s)');
+set(get(AX(2),'Ylabel'),'String','Energy consumptions(kwh)');
+xlabel('time(min)');
+%set(H1,'LineStyle','--');
+set(H2,'LineStyle','--');
+set(AX(1),'Ycolor','k');
+set(AX(2),'Ycolor','r');
+set(AX(1),'yTick',0:20:100) 
+set(AX(2),'yTick',0:4e3:4e4)
+%xlabel('diatance(m)'),ylabel('time(min)');
+grid on;
+
+figure;
+[AX,H1,H2] = plotyy(TT,vv2(1:80),TT,energy2,'plot');
+set(get(AX(1),'Ylabel'),'String','Velocity(m/s)');
+set(get(AX(2),'Ylabel'),'String','Energy consumptions(kwh)');
+xlabel('time(min)');
+%set(H1,'LineStyle','--');
+set(H2,'LineStyle','--');
+set(AX(1),'Ycolor','k');
+set(AX(2),'Ycolor','r');
+set(AX(1),'yTick',0:20:100) 
+set(AX(2),'yTick',0:4e3:4e4)
+%xlabel('diatance(m)'),ylabel('time(min)');
+grid on;
+
+figure;
+[AX,H1,H2] = plotyy(TT,vv3(1:80),TT,energy3,'plot');
+set(get(AX(1),'Ylabel'),'String','Velocity(m/s)');
+set(get(AX(2),'Ylabel'),'String','Energy consumptions(kwh)');
+xlabel('time(min)');
+%set(H1,'LineStyle','--');
+set(H2,'LineStyle','--');
+set(AX(1),'Ycolor','k');
+set(AX(2),'Ycolor','r');
+set(AX(1),'yTick',0:20:100) 
+set(AX(2),'yTick',0:4e3:4e4)
+%xlabel('diatance(m)'),ylabel('time(min)');
+grid on;
+
+figure;
+[AX,H1,H2] = plotyy(TT,vv4(1:80),TT,energy4,'plot');
+set(get(AX(1),'Ylabel'),'String','Velocity(m/s)');
+set(get(AX(2),'Ylabel'),'String','Energy consumptions(kwh)');
+xlabel('time(min)');
+%set(H1,'LineStyle','--');
+set(H2,'LineStyle','--');
+set(AX(1),'Ycolor','k');
+set(AX(2),'Ycolor','r');
+set(AX(1),'yTick',0:20:100) 
+set(AX(2),'yTick',0:4e3:4e4)
+%xlabel('diatance(m)'),ylabel('time(min)');
+grid on;
+
+figure;
+[AX,H1,H2] = plotyy(TT,vv5(1:80),TT,energy5,'plot');
+set(get(AX(1),'Ylabel'),'String','Velocity(m/s)');
+set(get(AX(2),'Ylabel'),'String','Energy consumptions(kwh)');
+xlabel('time(min)');
+%set(H1,'LineStyle','--');
+set(H2,'LineStyle','--');
+set(AX(1),'Ycolor','k');
+set(AX(2),'Ycolor','r');
+set(AX(1),'yTick',0:20:100) 
+set(AX(2),'yTick',0:4e3:4e4)
+%xlabel('diatance(m)'),ylabel('time(min)');
+grid on;
+
+
+
+
